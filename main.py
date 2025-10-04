@@ -2,18 +2,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 
+from linear import normalize
 from models import Ball, Wall
+
+NUM_BALLS = 10
 
 fig, ax = plt.subplots()
 
 size = 8
 
-ball_1 = Ball(
-    pos=[5.0,0.0], 
-    vect=[1.0,3.0],
-    ax=ax,
-    size=size
-)
+def generate_start_pos():
+    return (np.random.rand(1,2) * 10)[0]
+
+def generate_start_vect(speed: float):
+    start_vect = normalize((np.random.rand(1,2) * 10)[0]) * speed
+    print("Pos:", start_vect, "Norm:", np.linalg.norm(start_vect))
+    return start_vect
+
+balls = [Ball(pos=generate_start_pos(), vect=generate_start_vect(speed=4), ax=ax, size=size) for _ in range(NUM_BALLS)]
 
 top_wall = Wall(
     pos=np.array([0,10]),
@@ -46,22 +52,25 @@ bottom_wall.show()
 left_wall.show()
 right_wall.show()
 
-ball = ball_1.show()
+for ball in balls:
+    ball.show()
 
 def update(frame):
-    ball_1.pos += ball_1.vect
-    ball.set_xdata([ball_1.pos[0]])
-    ball.set_ydata([ball_1.pos[1]])
-    # print(ball_1.pos)
     
-    if ball_1.pos[1] >= 10:
-        ball_1.bounce(top_wall.normal)
-    if ball_1.pos[1] <= 0:
-        ball_1.bounce(bottom_wall.normal)
-    if ball_1.pos[0] >= 10:
-        ball_1.bounce(right_wall.normal)
-    if ball_1.pos[0] <= 0:
-        ball_1.bounce(left_wall.normal)
+    for b in balls:
+        b.pos += b.vect
+        b.update()
+        # print(ball_1.pos)
+        
+        if b.pos[1] >= 10:
+            b.bounce(top_wall.normal)
+        if b.pos[1] <= 0:
+            b.bounce(bottom_wall.normal)
+        if b.pos[0] >= 10:
+            b.bounce(right_wall.normal)
+        if b.pos[0] <= 0:
+            b.bounce(left_wall.normal)
 
-ani = animation.FuncAnimation(fig=fig, func=update, frames=60, interval=1)
+
+ani = animation.FuncAnimation(fig=fig, func=update, frames=60, interval=10)
 plt.show()

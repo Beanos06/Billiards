@@ -17,7 +17,11 @@ class Ball():
         self.vect = orth_self_on_n - proj_self_on_n
         
     def show(self):
-        return self.ax.plot(self.pos[0], self.pos[1], 'o', markersize=self.size)[0]
+        self.ball_on_screen = self.ax.plot(self.pos[0], self.pos[1], 'o', markersize=self.size)[0]
+    
+    def update(self):
+        self.ball_on_screen.set_xdata([self.pos[0]])
+        self.ball_on_screen.set_ydata([self.pos[1]])
 
 class Wall():
     def __init__(self, pos: NDArray, vect: NDArray, ax: Axes):
