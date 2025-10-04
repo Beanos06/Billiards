@@ -55,13 +55,13 @@ def update(frame):
     # print(ball_1.pos)
     
     if ball_1.pos[1] >= 10:
-        ball_1.bounce(np.array([0, 1]))
+        ball_1.bounce(top_wall.normal)
     if ball_1.pos[1] <= 0:
-        ball_1.bounce(np.array([0, 1]))
+        ball_1.bounce(bottom_wall.normal)
     if ball_1.pos[0] >= 10:
-        ball_1.bounce(np.array([1, 0]))
+        ball_1.bounce(right_wall.normal)
     if ball_1.pos[0] <= 0:
-        ball_1.bounce(np.array([1, 0]))
+        ball_1.bounce(left_wall.normal)
 
-ani = animation.FuncAnimation(fig=fig, func=update, frames=60, interval=10)
+ani = animation.FuncAnimation(fig=fig, func=update, frames=60, interval=1)
 plt.show()

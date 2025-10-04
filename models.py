@@ -24,6 +24,7 @@ class Wall():
         self.pos = pos
         self.vect = vect
         self.ax = ax
+        self.normal = np.array([vect[1], -vect[0]])
     
     def show(self):
         self.ax.plot(
