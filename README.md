@@ -1,4 +1,4 @@
 # Billiards Math Challenge
 
-Example simulation
+## Example simulation
 ![gif](billiard.gif)
