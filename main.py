@@ -5,22 +5,31 @@ import matplotlib.animation as animation
 from linear import normalize
 from models import Ball, Wall
 
-NUM_BALLS = 10
+NUM_BALLS = 10 # Number of balls
+size = 8 # Size of balls
 
+# Matplotlib setup
 fig, ax = plt.subplots()
-
-size = 8
+ax.set_ylim(0, 10)
+ax.set_xlim(0, 10)
+ax.set_axis_off()
+ax.set_title("Billiards Challenge")
 
 def generate_start_pos():
+    """Generate starting position of ball"""
+    
     return (np.random.rand(1,2) * 10)[0]
 
 def generate_start_vect(speed: float):
+    """Generate starting vector of a ball"""
+    
     start_vect = normalize((np.random.rand(1,2) * 10)[0]) * speed
-    print("Pos:", start_vect, "Norm:", np.linalg.norm(start_vect))
     return start_vect
 
+# Generate balls
 balls = [Ball(pos=generate_start_pos(), vect=generate_start_vect(speed=4), ax=ax, size=size) for _ in range(NUM_BALLS)]
 
+# Generate walls
 top_wall = Wall(
     pos=np.array([0,10]),
     vect=np.array([10, 0]),
@@ -42,25 +51,10 @@ right_wall = Wall(
     ax=ax
 )
 
-ax.set_ylim(0, 10)
-ax.set_xlim(0, 10)
-ax.set_axis_off()
-ax.set_title("Billiards Challenge")
-
-top_wall.show()
-bottom_wall.show()
-left_wall.show()
-right_wall.show()
-
-for ball in balls:
-    ball.show()
-
 def update(frame):
-    
     for b in balls:
         b.pos += b.vect
-        b.update()
-        # print(ball_1.pos)
+        b.update_pos()
         
         if b.pos[1] >= 10:
             b.bounce(top_wall.normal)
