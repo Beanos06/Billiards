@@ -1,0 +1,33 @@
+from numpy.typing import NDArray
+import numpy as np
+from matplotlib.axes import Axes
+
+K = 20 #constant to shrink the vector of ball for correct speed
+
+class Ball():
+    def __init__(self, pos: list[float], vect: list[float], ax: Axes, size: int):
+        self.pos = np.array(pos)
+        self.vect = np.array(vect) / K
+        self.ax = ax
+        self.size = size
+        
+    def bounce(self, normal_vect: NDArray):
+        proj_self_on_n = (np.dot(normal_vect, self.vect) / np.linalg.norm(normal_vect) ** 2) * normal_vect
+        orth_self_on_n = self.vect - proj_self_on_n
+        self.vect = orth_self_on_n - proj_self_on_n
+        
+    def show(self):
+        return self.ax.plot(self.pos[0], self.pos[1], 'o', markersize=self.size)[0]
+
+class Wall():
+    def __init__(self, pos: NDArray, vect: NDArray, ax: Axes):
+        self.pos = pos
+        self.vect = vect
+        self.ax = ax
+    
+    def show(self):
+        self.ax.plot(
+            [self.pos[0], self.pos[0] + self.vect[0]],
+            [self.pos[1], self.pos[1] + self.vect[1]],
+            color='black'
+        )
