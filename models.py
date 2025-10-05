@@ -25,9 +25,17 @@ class Ball():
         orth_self_on_n = self.vect - proj_self_on_n
         self.vect = orth_self_on_n - proj_self_on_n
         
-    def update_pos(self):
+    def update_pos(self, prev_pos):
         """Update ball's position on screen"""
         
+        # Basic trail of the ball
+        self.ax.plot(
+            [self.pos[0] - self.vect[0], self.pos[0]], # x component
+            [self.pos[1] - self.vect[1], self.pos[1]], # y component
+            color = 'red'
+        )
+        
+        # Update ball's position
         self.ball_on_screen.set_xdata([self.pos[0]]) # Update x position
         self.ball_on_screen.set_ydata([self.pos[1]]) # Update y position
 

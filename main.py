@@ -5,7 +5,8 @@ import matplotlib.animation as animation
 from linear import normalize
 from models import Ball, Wall
 
-NUM_BALLS = 10 # Number of balls
+INTERVAL = 10
+NUM_BALLS = 1 # Number of balls
 size = 8 # Size of balls
 
 # Matplotlib setup
@@ -54,8 +55,9 @@ right_wall = Wall(
 
 def update(frame):
     for b in balls:
+        prev_pos = b.pos
         b.pos += b.vect
-        b.update_pos()
+        b.update_pos(prev_pos)
         
         # Check collision with wall
         if b.pos[1] >= 10:
@@ -68,5 +70,5 @@ def update(frame):
             b.bounce(left_wall.normal)
 
 
-ani = animation.FuncAnimation(fig=fig, func=update, frames=60, interval=10)
+ani = animation.FuncAnimation(fig=fig, func=update, frames=60, interval=INTERVAL)
 plt.show()
