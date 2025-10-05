@@ -13,6 +13,7 @@ fig, ax = plt.subplots()
 ax.set_ylim(0, 10)
 ax.set_xlim(0, 10)
 ax.set_axis_off()
+ax.set_aspect('equal') # Equal aspect ratios for the axis
 ax.set_title("Billiards Challenge")
 
 def generate_start_pos():
@@ -56,6 +57,7 @@ def update(frame):
         b.pos += b.vect
         b.update_pos()
         
+        # Check collision with wall
         if b.pos[1] >= 10:
             b.bounce(top_wall.normal)
         if b.pos[1] <= 0:

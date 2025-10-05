@@ -27,8 +27,9 @@ class Ball():
         
     def update_pos(self):
         """Update ball's position on screen"""
-        self.ball_on_screen.set_xdata([self.pos[0]])
-        self.ball_on_screen.set_ydata([self.pos[1]])
+        
+        self.ball_on_screen.set_xdata([self.pos[0]]) # Update x position
+        self.ball_on_screen.set_ydata([self.pos[1]]) # Update y position
 
 class Wall():
     def __init__(self, pos: NDArray, vect: NDArray, ax: Axes):
@@ -41,8 +42,9 @@ class Wall():
     
     def show(self):
         """Render wall on screen"""
+        
         self.ax.plot(
-            [self.pos[0], self.pos[0] + self.vect[0]],
-            [self.pos[1], self.pos[1] + self.vect[1]],
+            [self.pos[0], self.pos[0] + self.vect[0]], # x component
+            [self.pos[1], self.pos[1] + self.vect[1]], # y component
             color='black'
         )
