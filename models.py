@@ -5,12 +5,12 @@ from matplotlib.axes import Axes
 K = 20 #constant to shrink the vector of ball for correct speed
 
 class Ball():
-    def __init__(self, pos: list[float], vect: list[float], ax: Axes, size: int):
+    def __init__(self, pos: list[float], vect: list[float], ax: Axes, size: int, trail: bool):
         self.pos = np.array(pos)
         self.vect = np.array(vect) / K
         self.ax = ax
         self.size = size
-        
+        self.trail = trail # Option to show ball's trail
         self.show() # Show on screen
         
     def show(self):
@@ -28,12 +28,13 @@ class Ball():
     def update_pos(self, prev_pos):
         """Update ball's position on screen"""
         
-        # Basic trail of the ball
-        self.ax.plot(
-            [self.pos[0] - self.vect[0], self.pos[0]], # x component
-            [self.pos[1] - self.vect[1], self.pos[1]], # y component
-            color = 'red'
-        )
+        # Basic trail of the ball if enabled
+        if self.trail:
+            self.ax.plot(
+                [self.pos[0] - self.vect[0], self.pos[0]], # x component
+                [self.pos[1] - self.vect[1], self.pos[1]], # y component
+                color = 'red'
+            )
         
         # Update ball's position
         self.ball_on_screen.set_xdata([self.pos[0]]) # Update x position

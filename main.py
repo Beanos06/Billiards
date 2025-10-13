@@ -8,6 +8,7 @@ from models import Ball, Wall
 INTERVAL = 10
 NUM_BALLS = 1 # Number of balls
 size = 8 # Size of balls
+TRAIL = True # Option to show ball's trail
 
 # Matplotlib setup
 fig, ax = plt.subplots()
@@ -29,7 +30,7 @@ def generate_start_vect(speed: float):
     return start_vect
 
 # Generate balls
-balls = [Ball(pos=generate_start_pos(), vect=generate_start_vect(speed=4), ax=ax, size=size) for _ in range(NUM_BALLS)]
+balls = [Ball(pos=generate_start_pos(), vect=generate_start_vect(speed=4), ax=ax, size=size, trail=TRAIL) for _ in range(NUM_BALLS)]
 
 # Generate walls
 top_wall = Wall(
